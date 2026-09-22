@@ -1,0 +1,168 @@
+{
+  "name": "liveboard",
+  "version": "1.4.0",
+  "private": true,
+  "type": "module",
+  "main": "electron-main.mjs",
+  "scripts": {
+    "start": "electron .",
+    "start:web": "node server.mjs",
+    "test": "node test-parsers.mjs && node test-core.mjs && node test-architecture.mjs && node test-cache.mjs && node test-security.mjs && node test-server.mjs && node test-sol-spec.mjs && node test-startup-fixture-server.mjs && node test-startup-source.mjs && node test-v11-board-pane.mjs && node test-v12-media.mjs && node test-v13-hot.mjs && node test-v14-gesture.mjs && node test-stage2-content.mjs && node test-stage3-ui.mjs && node test-stage4-readpositions.mjs && node test-stage5-thread-state.mjs && node test-stage6-candidates.mjs && node test-stage7-live-mode.mjs && node test-r2-step1.mjs && node test-r2-step2.mjs && node test-r2-step3.mjs && node test-r2-step4.mjs && node test-r2-step5.mjs && node test-r2-step6.mjs && node test-r5-step7-hotfix7.mjs && node test-r6-step0.mjs && node test-r6-step1.mjs",
+    "smoke": "LIVEBOARD_SMOKE=1 electron .",
+    "dist:mac": "npm run build:native:mac && electron-builder --mac dir zip --arm64",
+    "test:renderer": "node test-renderer-startup.mjs",
+    "test:smoke-negative": "node test-smoke-negative.mjs",
+    "verify:startup": "npm run smoke && npm run test:renderer && npm run test:smoke-negative",
+    "verify:asar": "node verify-asar.mjs dist/mac-arm64/LiveBoard.app",
+    "test:r2-step1": "node test-r2-step1.mjs",
+    "test:r2-step1:browser": "python test-r2-step1-browser.py",
+    "test:r2-step2": "node test-r2-step2.mjs",
+    "test:r2-step2:browser": "python test-r2-step2-browser.py",
+    "test:r2-step2:server": "node test-r2-step2-server-fixture.mjs",
+    "test:r2-step3": "node test-r2-step3.mjs",
+    "test:r2-step4": "node test-r2-step4.mjs",
+    "test:r2-step4:browser": "python test-r2-step4-browser.py",
+    "test:r2-step5": "node test-r2-step5.mjs && node test-v14-gesture.mjs",
+    "test:r2-step5:browser": "python test-r2-step5-browser.py",
+    "test:r2-step6": "node test-r2-step6.mjs",
+    "test:r2-step6:browser": "python test-r2-step6-browser.py",
+    "test:r2-step7": "node test-r2-step7.mjs",
+    "test:r3-step3": "node test-r3-step3.mjs",
+    "test:r3-step4": "node test-r3-step4.mjs && python test-r3-step4-browser.py",
+    "test:r3-step5": "node test-r3-step5.mjs && python test-r3-step5-browser.py",
+    "test:r3-step6": "node test-r3-step6.mjs && node test-v14-gesture.mjs && python test-r3-step6-browser.py && python test-r2-step5-browser.py",
+    "test:r3-step7": "node test-r3-step7.mjs",
+    "test:r4-step1": "node test-r4-step1.mjs",
+    "test:r4-step2": "node test-r4-step2.mjs && python3 test-r4-step2-browser.py",
+    "test:r4-step3": "node test-r4-step3.mjs",
+    "test:r4-step4": "node test-r4-step4.mjs && node test-r4-step4-fixture.mjs && python3 test-r4-step4-browser.py && node test-r4-step4-regression.mjs",
+    "test:r4-step5": "node test-r4-step5.mjs && python3 test-r4-step5-browser.py && python3 test-r4-step5-layout-browser.py",
+    "test:r4-step6": "node test-r4-step6.mjs && python3 test-r4-step6-browser.py",
+    "test:r4-step7": "node test-r4-step7.mjs && python3 test-r4-step7-lightbox-before-after.py && python3 test-r4-step7-browser.py",
+    "test:r4-step8": "node test-r4-step8.mjs",
+    "test:r4-step8:browser": "python3 test-r4-step8-browser.py",
+    "test:r5-step1": "node test-r5-step1.mjs",
+    "test:r5-step1:source": "node test-r5-step1-source.mjs",
+    "test:r5-step2": "node test-r5-step2.mjs",
+    "test:r5-step2:source": "node test-r5-step2-source.mjs",
+    "test:r5-step3": "node test-r5-step3.mjs && node test-r5-step3-app.mjs",
+    "test:r5-step3:source": "node test-r5-step3-source.mjs",
+    "test:r5-step4": "node test-r5-step4.mjs && node test-r5-step4-app.mjs && node test-r5-step4-navigation.mjs",
+    "test:r5-step4:source": "node test-r5-step4-source.mjs",
+    "test:r5-step5": "node test-r5-step5.mjs",
+    "test:r5-step5:source": "node test-r5-step5-source.mjs",
+    "test:r5-step5:browser": "python3 test-r5-step5-browser.py",
+    "test:r5-step6": "node test-r5-step6.mjs && python3 test-r5-step6-browser.py",
+    "test:r5-step6:source": "node test-r5-step6-source.mjs",
+    "test:r5-step7": "node test-r5-step7.mjs && python3 test-r5-step7-browser.py",
+    "test:r5-step7:source": "node test-r5-step7-source.mjs",
+    "test:r6-step0": "node test-r6-step0.mjs",
+    "test:r6-step0:server": "node test-r6-step0-server.mjs",
+    "test:r6-step1": "node test-r6-step1.mjs",
+    "test:r6-step1:browser": "python3 test-r6-step1-browser.py",
+    "test:r6-step3": "node test-r6-step3.mjs",
+    "test:r6-step3:browser": "python3 test-r6-step3-browser.py",
+    "test:r6-step4": "node test-r6-step4.mjs",
+    "test:r6-step4:browser": "python3 test-r6-step4-browser.py",
+    "test:r6-step5": "node test-r6-step5.mjs",
+    "test:r6-step5:browser": "python3 test-r6-step5-browser.py",
+    "test:r6-step6": "node test-r6-step6.mjs && node test-v14-gesture.mjs",
+    "test:r6-step6:browser": "python3 test-r6-step6-browser.py",
+    "build:native:mac": "bash native/build-wsb-native-macos.command",
+    "verify:r8-stage07": "node test-r8-stage07-combined.mjs && python3 test-r8-stage07-browser.py && node test-r8-stage07-package.mjs"
+  },
+  "devDependencies": {
+    "electron": "44.4.2",
+    "electron-builder": "26.16.1"
+  },
+  "build": {
+    "appId": "local.liveboard.desktop",
+    "productName": "LiveBoard",
+    "asar": true,
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "app.js",
+      "style.css",
+      "index.html",
+      "electron-main.mjs",
+      "electron-preload.cjs",
+      "server.mjs",
+      "core.mjs",
+      "repository.mjs",
+      "thread-store.mjs",
+      "board-adapters.mjs",
+      "fetch-scheduler.mjs",
+      "lru-cache.mjs",
+      "parsers.mjs",
+      "package.json",
+      "build-info.json",
+      "r5-navigation-core.mjs",
+      "r5-virtual-layout.mjs",
+      "r5-continuation-resolver.mjs",
+      "r5-live-transition.mjs",
+      "r5-ticker-continuity.mjs",
+      "text-decode.mjs",
+      "network-safety.mjs",
+      "permit-broker.mjs",
+      "markdown-export-core.mjs",
+      "markdown-copy.mjs",
+      "markdown-export-worker.mjs",
+      "markdown-export-manager.mjs",
+      "markdown-export-save.mjs",
+      "markdown-export-transport.mjs",
+      "utility-permit-client.mjs",
+      "wsb-pane-lifecycle.mjs",
+      "wsb-provider.mjs",
+      "wsb-provider-core.mjs",
+      "wsb-flat-stream.mjs",
+      "wsb-rate-budget.mjs",
+      "wsb-subscription-registry.mjs",
+      "wsb-translation-queue.mjs",
+      "wsb-reddit-contract.mjs",
+      "wsb-local-runtime.mjs",
+      "wsb-token-store.mjs",
+      "wsb-runtime-manager.mjs",
+      "wsb-runtime-engine.mjs",
+      "wsb-runtime-worker.mjs"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "arm64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ],
+      "category": "public.app-category.utilities",
+      "identity": null,
+      "icon": "build/icon.icns"
+    },
+    "extraResources": [
+      {
+        "from": "native-bin/WSBTranslationHelper",
+        "to": "wsb-native/WSBTranslationHelper"
+      },
+      {
+        "from": "native-bin/WSBTranslationPreparer",
+        "to": "wsb-native/WSBTranslationPreparer"
+      },
+      {
+        "from": "native-bin/manifest.json",
+        "to": "wsb-native/manifest.json"
+      }
+    ]
+  },
+  "dependencies": {
+    "parse5": "8.0.1"
+  }
+}
